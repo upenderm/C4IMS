@@ -53,6 +53,7 @@ article {
   
 <nav>
   <ul>
+  	<li><a href="welcome">Login (New)</a></li>
     <li><a href="views/Login.jsp">Login</a></li>
     <li><a href="views/Registration.jsp">Register</a></li>
     <li><a href="javascript:void(0)">Home</a></li>
