@@ -41,6 +41,7 @@ public class LoginController {
 			Thread.sleep(2000);
 			String result = userService.processUserLogin(userDetailsBean.getEmail(), userDetailsBean.getPassword());
 			if(result=="SUCCESS"){
+				response.setHeader("c4Token", "C4NetworkToken");
 				return "redirect:http://localhost:8080/VideoRentalManagementUI/";
 			}
 		} catch (InterruptedException e) {
