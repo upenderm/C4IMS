@@ -25,8 +25,9 @@ public class UserServiceImpl implements UserService {
 			return "SUCCESS";
 		else if (result == 2)
 			return "INVALIDCREDENTIALS";
-		else
-			return "FAILURE";
+		else if (result ==3)
+			return "SQLERROR";
+		return "FAILURE";
 	}
 
 }

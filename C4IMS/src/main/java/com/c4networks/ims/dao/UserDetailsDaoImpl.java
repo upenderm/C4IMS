@@ -51,29 +51,31 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 		return result;
 	}
 
-	@Override
-	public Integer processUserLogin(String userName, String password) {
-		Connection con;
-		PreparedStatement pstmt;
-		Integer result = 0;
-		try {
-			con = jdbcTemplate.getDataSource().getConnection();
-			pstmt = con.prepareStatement("select * from CUSTOMER_DETAILS where email = ?");
-			pstmt.setString(1, userName);
-			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()) {
-				rs.getString("email");
-				if (password.equals("chinni")) {
-					result = 1;
-				} else {
-					result = 2;
+		@Override
+		public Integer processUserLogin(String userName, String password) {
+			Connection con;
+			PreparedStatement pstmt;
+			Integer result = 0;
+			try {
+				con = jdbcTemplate.getDataSource().getConnection();
+				pstmt = con.prepareStatement("select * from USER_SECURITY where USERNAME= ?");
+				pstmt.setString(1, userName);
+				ResultSet rs = pstmt.executeQuery();
+				while (rs.next()) {
+					if (password.equals(rs.getString("PASSWORD"))) {
+						result = 1;
+					} else {
+						result = 2;
+					}
 				}
+	
+			}catch(java.sql.SQLRecoverableException e1){
+				e1.getMessage();
 			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			catch (SQLException e) {
+				result = 3;
+				e.printStackTrace();
+			}
 
 		return result;
 	}
