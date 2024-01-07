@@ -98,6 +98,6 @@ System.out.println("******In jSP********"+request.getHeader("c4Token"));
 
 	</div>
 	<!-- /form -->
-<input type="hidden" id="temp1" value="${loginError}"
+	<input type="hidden" id="temp1" value="${loginError}">
 </body>
 </html>

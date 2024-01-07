@@ -1,5 +1,6 @@
 package com.c4networks.ims.dao;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +16,12 @@ import com.c4networks.ims.model.UserDetailsBean;
 
 @Repository
 public class UserDetailsDaoImpl implements UserDetailsDao {
+
+	static {
+		System.out.println("**********************>>****************" + System.getProperty("user.dir"));
+		System.setProperty("oracle.net.tns_admin",
+				System.getProperty("user.dir") + File.separator + "Wallet_c4clouddb12102023");
+	}
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -51,31 +58,30 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 		return result;
 	}
 
-		@Override
-		public Integer processUserLogin(String userName, String password) {
-			Connection con;
-			PreparedStatement pstmt;
-			Integer result = 0;
-			try {
-				con = jdbcTemplate.getDataSource().getConnection();
-				pstmt = con.prepareStatement("select * from USER_SECURITY where USERNAME= ?");
-				pstmt.setString(1, userName);
-				ResultSet rs = pstmt.executeQuery();
-				while (rs.next()) {
-					if (password.equals(rs.getString("PASSWORD"))) {
-						result = 1;
-					} else {
-						result = 2;
-					}
+	@Override
+	public Integer processUserLogin(String userName, String password) {
+		Connection con;
+		PreparedStatement pstmt;
+		Integer result = 0;
+		try {
+			con = jdbcTemplate.getDataSource().getConnection();
+			pstmt = con.prepareStatement("select * from USER_SECURITY where USERNAME= ?");
+			pstmt.setString(1, userName);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				if (password.equals(rs.getString("PASSWORD"))) {
+					result = 1;
+				} else {
+					result = 2;
 				}
-	
-			}catch(java.sql.SQLRecoverableException e1){
-				e1.getMessage();
 			}
-			catch (SQLException e) {
-				result = 3;
-				e.printStackTrace();
-			}
+
+		} catch (java.sql.SQLRecoverableException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e) {
+			result = 3;
+			e.printStackTrace();
+		}
 
 		return result;
 	}

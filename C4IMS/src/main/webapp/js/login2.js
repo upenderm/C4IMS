@@ -1,27 +1,27 @@
 $(document).ready(function() {
 	$('.form').find('input, textarea').on('keyup blur focus', function(e) {
-		console.log("1111111");
+		//       console.log("1111111");
 		var $this = $(this), label = $this.prev('label');
 
 		if (e.type === 'keyup') {
-			console.log("222222");
+			//       console.log("222222");
 			if ($this.val() === '') {
-				console.log("33333333");
+				//       console.log("33333333");
 				label.removeClass('active highlight');
 			} else {
-				console.log("44444");
+				//       console.log("44444");
 				label.addClass('active highlight');
 			}
 		} else if (e.type === 'blur') {
-			console.log("55555");
+			//       console.log("55555");
 			if ($this.val() === '') {
-				console.log("666666");
+				//       console.log("666666");
 				label.removeClass('active highlight');
 			} else {
 				label.removeClass('highlight');
 			}
 		} else if (e.type === 'focus') {
-			console.log("777777777");
+			//       console.log("777777777");
 			if ($this.val() === '') {
 				label.removeClass('highlight');
 			} else if ($this.val() !== '') {
@@ -32,7 +32,7 @@ $(document).ready(function() {
 	});
 
 	$('.tab a').on('click', function(e) {
-		console.log("clicked on tabs..");
+		//       console.log("clicked on tabs..");
 		e.preventDefault();
 
 		$(this).parent().addClass('active');
@@ -47,11 +47,11 @@ $(document).ready(function() {
 	});
 
 	$(document).ready(function() {
-		console.log("page loaded..");
+		//       console.log("page loaded..");
 		var kk = $('#temp1');
-		console.log("kk value is ::" + kk);
+		//       console.log("kk value is ::" + kk);
 		if (kk) {
-			console.log("page loaded first object.." + kk[0].value);
+			//       console.log("page loaded first object.." + kk[0].value);
 			if (kk[0].value) {
 				$('#signinli a').trigger("click");
 			}

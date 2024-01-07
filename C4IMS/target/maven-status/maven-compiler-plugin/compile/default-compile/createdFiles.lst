@@ -1,7 +1,0 @@
-com\c4networks\ims\constants\WebRequestMappingConstants.class
-com\c4networks\ims\model\UserDetailsBean.class
-com\c4networks\ims\dao\UserDetailsDao.class
-com\c4networks\ims\controller\LoginController.class
-com\c4networks\ims\services\UserServiceImpl.class
-com\c4networks\ims\dao\UserDetailsDaoImpl.class
-com\c4networks\ims\services\UserService.class
