@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.c4networks.ims.constants.WebRequestMappingConstants;
-import com.c4networks.ims.model.UserDetailsBean;
+import com.c4networks.ims.model.UserSecurity;
 import com.c4networks.ims.services.UserService;
 
 @Controller
@@ -35,20 +35,21 @@ public class LoginController {
 
 	@RequestMapping(method = RequestMethod.POST, value = WebRequestMappingConstants.LOGIN)
 	public String processLogin(HttpServletRequest request, HttpServletResponse response, ModelMap model,
-			UserDetailsBean userDetailsBean, RedirectAttributes attributes) {
+			UserSecurity userSecurity, RedirectAttributes attributes) {
 		logger.info("LoginController.processLogin");
-		logger.info("Username given is :" + userDetailsBean.getEmail());
-		logger.info("Password is :" + userDetailsBean.getPassword());
+		logger.info("Username given is :" + userSecurity.getUserName());
+		logger.info("Password is :" + userSecurity.getPassword());
 		try {
+			System.out.println("model------------"+model.get("password"));
 			Thread.sleep(2000);
-			String result = userService.processUserLogin(userDetailsBean.getEmail(), userDetailsBean.getPassword());
+			String result = userService.processUserLogin(userSecurity.getUserName(), userSecurity.getPassword());
 			if (result == "SUCCESS") {
 				Cookie cookie = new Cookie("C4TOKEN", "C4NetworkToken");
 				cookie.setMaxAge(-1);
 				cookie.setPath("/");
 				response.addCookie(cookie);
 
-				Cookie ssocookie = new Cookie("SSOSESSIONID", userDetailsBean.getEmail());
+				Cookie ssocookie = new Cookie("SSOSESSIONID", userSecurity.getUserName());
 				ssocookie.setMaxAge(-1);
 				ssocookie.setPath("/");
 				response.addCookie(ssocookie);
@@ -60,25 +61,6 @@ public class LoginController {
 		}
 		model.addAttribute("loginError", "Unable to Login man...");
 		return "Login";
-	}
-
-	@RequestMapping(method = RequestMethod.GET, value = WebRequestMappingConstants.REGISTRATION)
-	public String processRegistration(HttpServletRequest request, HttpServletResponse response, ModelMap model,
-			UserDetailsBean userDetailsBean) {
-		logger.info("LoginController.processRegistration");
-		System.out.println(">>------>" + request.getHeader("c4Token"));
-
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				System.out.println(cookie.getName());
-				if (cookie.getName().equalsIgnoreCase("c4Token")
-						&& cookie.getValue().equalsIgnoreCase("C4NetworkToken")) {
-				}
-			}
-		}
-
-		return "views/Login2";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = WebRequestMappingConstants.LOGOUT)

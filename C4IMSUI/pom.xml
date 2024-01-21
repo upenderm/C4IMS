@@ -2,11 +2,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.c4networks.c4ims</groupId>
-	<artifactId>C4IMS</artifactId>
+	<groupId>com.c4networks.ims</groupId>
+	<artifactId>ims-c4imsui</artifactId>
 	<packaging>war</packaging>
-	<version>1.0-SNAPSHOT</version>
-	<name>C4IMS Maven Webapp</name>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>C4IMS_Webapp</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<spring.version>4.2.0.RELEASE</spring.version>
@@ -27,6 +27,11 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.5.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -89,6 +94,6 @@
 		</dependencies>
 	</dependencyManagement>
 	<build>
-		<finalName>C4IMS</finalName>
+		<finalName>C4IMSUI</finalName>
 	</build>
 </project>
