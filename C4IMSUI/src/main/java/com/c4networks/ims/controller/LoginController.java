@@ -40,9 +40,9 @@ public class LoginController {
 		logger.info("Username given is :" + userSecurity.getUserName());
 		logger.info("Password is :" + userSecurity.getPassword());
 		try {
-			System.out.println("model------------"+model.get("password"));
-			Thread.sleep(2000);
-			String result = userService.processUserLogin(userSecurity.getUserName(), userSecurity.getPassword());
+			System.out.println("model------------" + model.get("password"));
+			Thread.sleep(500);
+			String result = userService.processUserLogin(userSecurity);
 			if (result == "SUCCESS") {
 				Cookie cookie = new Cookie("C4TOKEN", "C4NetworkToken");
 				cookie.setMaxAge(-1);
@@ -54,7 +54,8 @@ public class LoginController {
 				ssocookie.setPath("/");
 				response.addCookie(ssocookie);
 
-				return "redirect:http://localhost:8080/VideoRentalManagementUI/";
+//				return "redirect:http://localhost:8080/VideoRentalManagementUI/";
+				return "redirect:" + userSecurity.getPath();
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();

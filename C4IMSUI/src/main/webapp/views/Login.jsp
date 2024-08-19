@@ -22,7 +22,7 @@
 <script type="text/javascript" src="${contextPath}/js/login2.js"></script>
 <link rel="stylesheet" href="${contextPath}/css/login2.css">
 </head>
-<body>
+<body onLoad="document.forms[0].userName.focus">
 	<div class="form">
 		<c:if test="${not empty loginError}">
 			<ul>
@@ -92,6 +92,13 @@
 						<label> Set A Password<span class="req">*</span>
 						</label> <input type="password" name="password" required
 							autocomplete="off" />
+					</div>
+					
+					<div class="field-wrap">
+						<input type="radio" id="vrmsProduct" name="productType" value="VRMS">
+					  	<label for="vrmsProduct">Video Rental Management System</label><br>
+					  	<input type="radio" id="cdmsProduct" name="productType" value="CDMS">
+					  	<label for="cdmsProduct">Contract Documents Management System</label><br>
 					</div>
 
 					<button type="submit" class="button button-block">Get

@@ -5,6 +5,7 @@ public class UserSecurity {
 	private String userName;
 	private String password;
 	private String status;
+	private String path;
 
 	public final String getUserName() {
 		return userName;
@@ -28,6 +29,14 @@ public class UserSecurity {
 
 	public final void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 }

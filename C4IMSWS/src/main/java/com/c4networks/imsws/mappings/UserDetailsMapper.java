@@ -29,7 +29,7 @@ public class UserDetailsMapper implements RowMapper<UserDetails> {
 		userDtls.setLastModifiedBy(rs.getString("LAST_MODIFIED_BY"));
 		userDtls.setLastModifiedDate(rs.getDate("LAST_MODIFIED_DATE"));
 
-		companyDtls.setCompanyID(rs.getString("COMPANY_OID"));
+		companyDtls.setCompanyOID(rs.getString("COMPANY_OID"));
 		userDtls.setCompanyDetails(companyDtls);
 
 		roleDtls.setRoleID(rs.getString("ROLE_ID"));

@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -16,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.c4networks.imsws.services.UserCreationService;
 import com.c4networks.imsws.services.UserDetailsService;
+import com.c4networks.imsws.utils.ProductEnum;
 import com.c4networks.imsws.vo.C4UserObject;
 
 @Path("/AgentRegisterServices")
@@ -44,8 +44,11 @@ public class RegisteringServicesRS {
 		} else if (!isUsernameAvailable) {
 			response = Response.status(Status.CONFLICT).entity("Data already exists in our records").build();
 		} else {
-			userCreationService.createNewUser(c4UserObject.getUserDetails(), c4UserObject.getUserSecurity());
-			response = Response.status(Status.CREATED).entity("SUCCESS").build();
+			String key = c4UserObject.getProductTypes().entrySet().iterator().next().getKey();
+			userCreationService.createNewUser(c4UserObject.getUserDetails(), c4UserObject.getUserSecurity(),
+					ProductEnum.valueOf(key));
+			c4UserObject.getProductTypes().put(key, ProductEnum.valueOf(key).getProductPath());
+			response = Response.status(Status.CREATED).entity(c4UserObject).build();
 		}
 		Instant endTime = Instant.now();
 		System.out.println("Time taken to process request is :" + endTime.compareTo(startTime) + " seconds");
@@ -72,13 +75,14 @@ public class RegisteringServicesRS {
 				c4UserObject.getUserDetails().getMobile(),
 //				c4UserObject.getUserDetails().getCreatedBy(), c4UserObject.getUserDetails().getCreatedDate(),
 //				c4UserObject.getUserDetails().getLastModifiedBy(), c4UserObject.getUserDetails().getLastModifiedDate(),
-				c4UserObject.getUserSecurity().getUserName(), c4UserObject.getUserSecurity().getPassword()
+				c4UserObject.getUserSecurity().getUserName(), c4UserObject.getUserSecurity().getPassword(),
 //				c4UserObject.getUserSecurity().getUserOID(), c4UserObject.getUserSecurity().getTempUsername(),
 //				c4UserObject.getUserSecurity().getCreatedBy(), c4UserObject.getUserSecurity().getCreatedDate(),
 //				c4UserObject.getUserSecurity().getLastModifiedBy(),
 //				c4UserObject.getUserSecurity().getLastModifiedDate(), c4UserObject.getUserSecurity().getStatus(),
 //				c4UserObject.getUserSecurity().getVersion()
-		).anyMatch(Objects::isNull)
+				c4UserObject.getProductTypes().entrySet().iterator().next().getKey()
+				).anyMatch(Objects::isNull)
 				&& c4UserObject.getUserDetails().getEmail().equals(c4UserObject.getUserSecurity().getUserName())
 				&& c4UserObject.getUserDetails().getEmail().equals(c4UserObject.getUserDetails().getUserName()));
 	}

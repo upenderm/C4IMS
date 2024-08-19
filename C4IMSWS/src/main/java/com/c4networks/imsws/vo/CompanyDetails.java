@@ -13,6 +13,7 @@ public class CompanyDetails {
 	private Date createdDate;
 	private String lastModifiedBy;
 	private Date lastModifiedDate;
+	private ProductDetails productDetails;
 
 	public final String getCompanyOID() {
 		return companyOID;
@@ -121,6 +122,14 @@ public class CompanyDetails {
 		builder.append(lastModifiedDate);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	public ProductDetails getProductDetails() {
+		return productDetails;
+	}
+
+	public void setProductDetails(ProductDetails productDetails) {
+		this.productDetails = productDetails;
 	}
 
 }

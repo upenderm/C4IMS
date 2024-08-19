@@ -1,5 +1,7 @@
 package com.c4networks.imsws.utils;
 
+import java.util.UUID;
+
 import org.apache.commons.lang3.RandomStringUtils;
 
 public class AlphaNumericRandomGenerator {
@@ -10,7 +12,6 @@ public class AlphaNumericRandomGenerator {
 	private final static int USER_SEQUENCE = 16;
 
 //	private final static int CUSTOMER_SEQUENCE = 8; // 12
-
 //	private final static int MOVIE_SEQUENCE = 7; // 10
 //	private final static int CATEGORY_SEQUENCE = 7; // 10
 //	private final static int RENTAL_SEQUENCE = 5; // 8
@@ -39,37 +40,50 @@ public class AlphaNumericRandomGenerator {
 		randomSequence = RandomStringUtils.randomAlphanumeric(USER_SEQUENCE).toUpperCase();
 		return randomSequence;
 	}
-
-	/*
-	 * public static String generateAlphaNumericSeqForCustomerID() { String
-	 * randomSequence; randomSequence = "CUST" +
-	 * RandomStringUtils.randomAlphanumeric(CUSTOMER_SEQUENCE).toUpperCase(); return
-	 * randomSequence; }
-	 * 
-	 * public static String generateAlphaNumericSeqForMovieID() { String
-	 * randomSequence; randomSequence = "MOV" +
-	 * RandomStringUtils.randomAlphanumeric(MOVIE_SEQUENCE).toUpperCase(); return
-	 * randomSequence; }
-	 * 
-	 * public static String generateAlphaNumericSeqForCategoryID() { String
-	 * randomSequence; randomSequence = "CAT" +
-	 * RandomStringUtils.randomAlphanumeric(CATEGORY_SEQUENCE).toUpperCase(); return
-	 * randomSequence; }
-	 * 
-	 * public static String generateAlphaNumericSeqForRentalID() { String
-	 * randomSequence; randomSequence = "RNT" +
-	 * RandomStringUtils.randomAlphanumeric(RENTAL_SEQUENCE).toUpperCase(); return
-	 * randomSequence; }
-	 * 
-	 * public static String generateAlphaNumericSeqForBonusID() { String
-	 * randomSequence; randomSequence = "BNS" +
-	 * RandomStringUtils.randomAlphanumeric(BONUS_SEQUENCE).toUpperCase(); return
-	 * randomSequence; }
-	 * 
-	 * public static String getRandomString(int length) { String randomStr =
-	 * UUID.randomUUID().toString(); System.out.println(">>" + randomStr); while
-	 * (randomStr.length() < length) { randomStr += UUID.randomUUID().toString(); }
-	 * return randomStr.substring(0, length); }
-	 */
+	
+//	public static String generateAgentCustomerIdentifier() {
+//		String randomSequence;
+//		randomSequence = RandomStringUtils.random(USER_SEQUENCE, "AGC").toUpperCase();
+//		return randomSequence;
+//	}
+//
+//	public static String generateAlphaNumericSeqForCustomerID() {
+//		String randomSequence;
+//		randomSequence = RandomStringUtils.random(CUSTOMER_SEQUENCE, "CUST").toUpperCase();
+//		return randomSequence;
+//	}
+//
+//	public static String generateAlphaNumericSeqForMovieID() {
+//		String randomSequence;
+//		randomSequence = "MOV" + RandomStringUtils.randomAlphanumeric(MOVIE_SEQUENCE).toUpperCase();
+//		return randomSequence;
+//	}
+//
+//	public static String generateAlphaNumericSeqForCategoryID() {
+//		String randomSequence;
+//		randomSequence = "CAT" + RandomStringUtils.randomAlphanumeric(CATEGORY_SEQUENCE).toUpperCase();
+//		return randomSequence;
+//	}
+//
+//	public static String generateAlphaNumericSeqForRentalID() {
+//		String randomSequence;
+//		randomSequence = "RNT" + RandomStringUtils.randomAlphanumeric(RENTAL_SEQUENCE).toUpperCase();
+//		return randomSequence;
+//	}
+//
+//	public static String generateAlphaNumericSeqForBonusID() {
+//		String randomSequence;
+//		randomSequence = "BNS" + RandomStringUtils.randomAlphanumeric(BONUS_SEQUENCE).toUpperCase();
+//		return randomSequence;
+//	}
+//
+//	public static String getRandomString(int length) {
+//		String randomStr = UUID.randomUUID().toString();
+//		System.out.println(">>" + randomStr);
+//		while (randomStr.length() < length) {
+//			randomStr += UUID.randomUUID().toString();
+//		}
+//		return randomStr.substring(0, length);
+//	}
 
 }

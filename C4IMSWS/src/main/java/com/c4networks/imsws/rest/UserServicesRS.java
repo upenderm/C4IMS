@@ -16,8 +16,8 @@ import org.springframework.beans.factory.config.SingletonBeanRegistry;
 
 import com.c4networks.imsws.services.ApplicationContextProviderService;
 import com.c4networks.imsws.services.UserDetailsService;
+import com.c4networks.imsws.vo.C4UserObject;
 import com.c4networks.imsws.vo.UserDetails;
-import com.c4networks.imsws.vo.UserSecurity;
 
 @Path("/AgentServices")
 public class UserServicesRS {
@@ -35,9 +35,9 @@ public class UserServicesRS {
 			@QueryParam(value = "password") final String password) {
 		System.out.println("In UserServicesRS.authenticateUserSecurity....**..");
 
-		UserSecurity userSecurity = userDtlsService.authenticateUserCredentials(userName, password);
+		C4UserObject c4UserObject = userDtlsService.authenticateUserCredentials(userName, password);
 
-		return Response.status(200).entity(userSecurity).build();
+		return Response.status(200).entity(c4UserObject).build();
 	}
 
 	@GET

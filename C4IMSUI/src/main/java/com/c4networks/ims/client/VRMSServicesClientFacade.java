@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.c4networks.ims.model.C4UserObject;
-import com.c4networks.ims.model.UserSecurity;
 
 @Component
 public class VRMSServicesClientFacade {
@@ -28,7 +27,7 @@ public class VRMSServicesClientFacade {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	public UserSecurity processUserLogin(String userName, String password) {
+	public C4UserObject processUserLogin(String userName, String password) {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -40,7 +39,7 @@ public class VRMSServicesClientFacade {
 		uriBuilder.queryParam("username", userName);
 		uriBuilder.queryParam("password", password);
 
-		return restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity, UserSecurity.class).getBody();
+		return restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity, C4UserObject.class).getBody();
 	}
 
 	public boolean processUserRegisteration(C4UserObject c4UserObject) {
@@ -54,7 +53,10 @@ public class VRMSServicesClientFacade {
 		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(VRMS_SERVICES_CONTEXT_URL
 				+ VRMS_SERVICES_AGENT_REGISTERATION_CONTEXT + VRMS_SERVICES_AGENT_REGISTERATION);
 
-		ResponseEntity<String> response = restTemplate.postForEntity(uriBuilder.toUriString(), entity, String.class);
+		ResponseEntity<C4UserObject> response = restTemplate.postForEntity(uriBuilder.toUriString(), entity, C4UserObject.class);
+		if(response.getStatusCode() == HttpStatus.CREATED) {
+			c4UserObject.setProductTypes(response.getBody().getProductTypes());
+		}
 		return (response.getStatusCode() == HttpStatus.CREATED);
 	}
 

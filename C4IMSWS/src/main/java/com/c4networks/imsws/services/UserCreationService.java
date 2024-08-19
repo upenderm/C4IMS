@@ -13,7 +13,9 @@ import com.c4networks.imsws.dao.RoleDetailsDAO;
 import com.c4networks.imsws.dao.UserDetailsDAO;
 import com.c4networks.imsws.dao.UserSecurityDAO;
 import com.c4networks.imsws.utils.AlphaNumericRandomGenerator;
+import com.c4networks.imsws.utils.ProductEnum;
 import com.c4networks.imsws.vo.CompanyDetails;
+import com.c4networks.imsws.vo.ProductDetails;
 import com.c4networks.imsws.vo.RoleDetails;
 import com.c4networks.imsws.vo.UserDetails;
 import com.c4networks.imsws.vo.UserSecurity;
@@ -40,7 +42,7 @@ public class UserCreationService {
 	private final int version = 1;
 
 	@Transactional
-	public void createNewUser(UserDetails usrDtls, UserSecurity usrSec) {
+	public void createNewUser(UserDetails usrDtls, UserSecurity usrSec, ProductEnum pEnum) {
 
 		Date date = new Date();
 
@@ -63,8 +65,21 @@ public class UserCreationService {
 			companyDtls.setLastModifiedBy(SYSTEM_ADMIN_COMPANY);
 			companyDtls.setLastModifiedDate(date);
 			companyDtls.setPhone(null);
+			ProductDetails productDtls = new ProductDetails();
+			productDtls.setProductID(pEnum.getProductID());
+			productDtls.setProductName(pEnum.getProductName());
+			productDtls.setProductDescription(pEnum.getProductDesc());
+			productDtls.setProductPath(pEnum.getProductPath());
+			companyDtls.setProductDetails(productDtls);
 		}
 		companyDtlsDAO.createCompanyDetails(companyDtls);
+
+		ProductDetails productDtls = new ProductDetails();
+		productDtls.setProductID(pEnum.getProductID());
+		productDtls.setProductName(pEnum.getProductName());
+		productDtls.setProductDescription(pEnum.getProductDesc());
+		productDtls.setProductPath(pEnum.getProductPath());
+//		productDtlsDAO.createProductDetails(productDtls);
 
 		RoleDetails rDtls = new RoleDetails();
 		rDtls.setCompanyDetails(companyDtls);

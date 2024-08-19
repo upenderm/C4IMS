@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.c4networks.ims.constants.WebRequestMappingConstants;
+import com.c4networks.ims.model.C4UserObject;
 import com.c4networks.ims.model.UserDetails;
 import com.c4networks.ims.services.UserService;
 
@@ -31,9 +32,12 @@ public class RegisterationController {
 		System.out.println(">>------>" + request.getHeader("c4Token"));
 		String password = request.getParameter("password");
 		System.out.println("password------------"+password);
+		String productType = request.getParameter("productType");
+		System.out.println("password------------"+productType);
 		try {
-			Thread.sleep(2000);
-			String result = userService.registerNewUser(userDetails, password);
+			Thread.sleep(1000);
+			C4UserObject c4UserObject = new C4UserObject();
+			String result = userService.registerNewUser(userDetails, password, productType, c4UserObject);
 			if (result == "SUCCESS") {
 				Cookie cookie = new Cookie("C4TOKEN", "C4NetworkToken");
 				cookie.setMaxAge(-1);
@@ -45,7 +49,8 @@ public class RegisterationController {
 				ssocookie.setPath("/");
 				response.addCookie(ssocookie);
 
-				return "redirect:http://localhost:8080/VideoRentalManagementUI/";
+//				return "redirect:http://localhost:8080/VideoRentalManagementUI/";
+				return "redirect:"+c4UserObject.getProductTypes().get(productType);
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();

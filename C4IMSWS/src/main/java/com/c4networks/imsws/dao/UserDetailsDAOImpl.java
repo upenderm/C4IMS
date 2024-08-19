@@ -23,15 +23,16 @@ public class UserDetailsDAOImpl implements UserDetailsDAO {
 	private final String CREATE_SQL = "INSERT INTO C4_USER_DETAILS (\r\n"
 			+ "C4_USER_OID, USERNAME, EMAIL, FIRST_NAME, LAST_NAME, MOBILE, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, ROLE_ID, COMPANY_OID\r\n"
 			+ ") VALUES (\r\n" + "?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?\r\n" + ")";
+	
+	private final String SQL_GET_USER_DETAILS = "select * from c4_user_details where c4_user_oid = ?";
 
 	public UserDetailsDAOImpl() {
 
 	}
 
 	@Override
-	public UserDetails getUserDetailsById(String userOID) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<UserDetails> getUserDetailsById(String... userOID) {
+		return jdbcTemplate.query(SQL_GET_USER_DETAILS, userOID, new UserDetailsMapper());
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import com.c4networks.imsws.vo.UserDetails;
 
 public interface UserDetailsDAO {
 
-	public UserDetails getUserDetailsById(String userOID);
+	public List<UserDetails> getUserDetailsById(String... userOID);
 
 	public List<UserDetails> getAllUsersList();
 

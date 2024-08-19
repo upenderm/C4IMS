@@ -1,5 +1,8 @@
 package com.c4networks.ims.services;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +18,11 @@ public class UserServiceImpl implements UserService {
 	private VRMSServicesClientFacade vrmsServicesClientFacade;
 
 	@Override
-	public String registerNewUser(UserDetails userDetails, String password) {
+	public String registerNewUser(UserDetails userDetails, String password, String productType,
+			C4UserObject c4UserObject) {
 		String result = "";
-		C4UserObject c4UserObject = new C4UserObject();
+		Map<String, String> productMap = new HashMap<>();
+		productMap.put(productType, null);
 		if (null == userDetails.getUserName()) {
 			userDetails.setUserName(userDetails.getEmail());
 		}
@@ -26,6 +31,7 @@ public class UserServiceImpl implements UserService {
 		userSecurity.setUserName(userDetails.getEmail());
 		userSecurity.setPassword(password);
 		c4UserObject.setUserSecurity(userSecurity);
+		c4UserObject.setProductTypes(productMap);
 		boolean flag = vrmsServicesClientFacade.processUserRegisteration(c4UserObject);
 		if (flag) {
 			result = "SUCCESS";
@@ -34,10 +40,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String processUserLogin(String userName, String password) {
+	public String processUserLogin(UserSecurity userSecurity) {
 		String result = "";
-		UserSecurity usrSecurity = vrmsServicesClientFacade.processUserLogin(userName, password);
-		if ("ACTIVE".equals(usrSecurity.getStatus())) {
+		C4UserObject c4UserObject = vrmsServicesClientFacade.processUserLogin(userSecurity.getUserName(), userSecurity.getPassword());
+		if (null != c4UserObject.getUserSecurity() && "ACTIVE".equals(c4UserObject.getUserSecurity().getStatus())) {
+			if(null!=c4UserObject.getProductTypes()) {
+				userSecurity.setPath(c4UserObject.getProductTypes().entrySet().iterator().next().getValue());
+			}
 			result = "SUCCESS";
 		}
 		return result;
