@@ -1,20 +1,34 @@
 package com.c4networks.imsws.vo;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UserDetails {
+public class UserDetails implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@JsonProperty(required = false)
 	private String c4UserOID;
 
+	@JsonProperty(required = false)
 	private String userName;
+
+	@JsonProperty(required = false)
 	private String email;
+
+	@JsonProperty(required = false)
 	private String firstName;
+
+	@JsonProperty(required = false)
 	private String lastName;
+
+	@JsonProperty(required = false)
 	private String mobile;
 
 	@JsonProperty(required = false)
@@ -133,59 +147,59 @@ public class UserDetails {
 		this.companyDetails = companyDetails;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(c4UserOID, companyDetails, createdBy, createdDate, email, firstName, lastModifiedBy,
-				lastModifiedDate, lastName, mobile, roleDetails, userName);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		UserDetails other = (UserDetails) obj;
-		return Objects.equals(c4UserOID, other.c4UserOID) && Objects.equals(companyDetails, other.companyDetails)
-				&& Objects.equals(createdBy, other.createdBy) && Objects.equals(createdDate, other.createdDate)
-				&& Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName)
-				&& Objects.equals(lastModifiedBy, other.lastModifiedBy)
-				&& Objects.equals(lastModifiedDate, other.lastModifiedDate) && Objects.equals(lastName, other.lastName)
-				&& Objects.equals(mobile, other.mobile) && Objects.equals(roleDetails, other.roleDetails)
-				&& Objects.equals(userName, other.userName);
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("UserDetails [c4UserOID=");
-		builder.append(c4UserOID);
-		builder.append(", userName=");
-		builder.append(userName);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", firstName=");
-		builder.append(firstName);
-		builder.append(", lastName=");
-		builder.append(lastName);
-		builder.append(", mobile=");
-		builder.append(mobile);
-		builder.append(", createdBy=");
-		builder.append(createdBy);
-		builder.append(", createdDate=");
-		builder.append(createdDate);
-		builder.append(", lastModifiedBy=");
-		builder.append(lastModifiedBy);
-		builder.append(", lastModifiedDate=");
-		builder.append(lastModifiedDate);
-		builder.append(", roleDetails=");
-		builder.append(roleDetails);
-		builder.append(", companyDetails=");
-		builder.append(companyDetails);
-		builder.append("]");
-		return builder.toString();
-	}
+//	@Override
+//	public int hashCode() {
+//		return Objects.hash(c4UserOID, companyDetails, createdBy, createdDate, email, firstName, lastModifiedBy,
+//				lastModifiedDate, lastName, mobile, roleDetails, userName);
+//	}
+//
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		UserDetails other = (UserDetails) obj;
+//		return Objects.equals(c4UserOID, other.c4UserOID) && Objects.equals(companyDetails, other.companyDetails)
+//				&& Objects.equals(createdBy, other.createdBy) && Objects.equals(createdDate, other.createdDate)
+//				&& Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName)
+//				&& Objects.equals(lastModifiedBy, other.lastModifiedBy)
+//				&& Objects.equals(lastModifiedDate, other.lastModifiedDate) && Objects.equals(lastName, other.lastName)
+//				&& Objects.equals(mobile, other.mobile) && Objects.equals(roleDetails, other.roleDetails)
+//				&& Objects.equals(userName, other.userName);
+//	}
+//
+//	@Override
+//	public String toString() {
+//		StringBuilder builder = new StringBuilder();
+//		builder.append("UserDetails [c4UserOID=");
+//		builder.append(c4UserOID);
+//		builder.append(", userName=");
+//		builder.append(userName);
+//		builder.append(", email=");
+//		builder.append(email);
+//		builder.append(", firstName=");
+//		builder.append(firstName);
+//		builder.append(", lastName=");
+//		builder.append(lastName);
+//		builder.append(", mobile=");
+//		builder.append(mobile);
+//		builder.append(", createdBy=");
+//		builder.append(createdBy);
+//		builder.append(", createdDate=");
+//		builder.append(createdDate);
+//		builder.append(", lastModifiedBy=");
+//		builder.append(lastModifiedBy);
+//		builder.append(", lastModifiedDate=");
+//		builder.append(lastModifiedDate);
+//		builder.append(", roleDetails=");
+//		builder.append(roleDetails);
+//		builder.append(", companyDetails=");
+//		builder.append(companyDetails);
+//		builder.append("]");
+//		return builder.toString();
+//	}
 
 }

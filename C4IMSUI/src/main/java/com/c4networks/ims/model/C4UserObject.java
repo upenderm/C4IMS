@@ -3,7 +3,7 @@ package com.c4networks.ims.model;
 import java.io.Serializable;
 import java.util.Map;
 
-public class C4UserObject implements Serializable {
+public class C4UserObject implements Serializable{
 
 	/**
 	 * 

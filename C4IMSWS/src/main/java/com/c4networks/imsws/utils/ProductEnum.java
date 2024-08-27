@@ -3,7 +3,7 @@ package com.c4networks.imsws.utils;
 public enum ProductEnum {
 
 	VRMS("VRMS", "VRMS", "VideoRentalManagementSystem", "http://localhost:8080/VideoRentalManagementUI/"),
-	CDMS("CDMS", "CDMS", "ContractDocumentsManagementSystem", "http://localhost:8080/ContractDocumentsManagementUI");
+	CDMS("CDMS", "CDMS", "ContractDocumentsManagementSystem", "http://localhost:8081/ContractDocumentsManagementUI");
 
 	private String productID;
 	private String productName;

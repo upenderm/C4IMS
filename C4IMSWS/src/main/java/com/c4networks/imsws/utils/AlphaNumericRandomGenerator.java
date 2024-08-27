@@ -1,7 +1,5 @@
 package com.c4networks.imsws.utils;
 
-import java.util.UUID;
-
 import org.apache.commons.lang3.RandomStringUtils;
 
 public class AlphaNumericRandomGenerator {

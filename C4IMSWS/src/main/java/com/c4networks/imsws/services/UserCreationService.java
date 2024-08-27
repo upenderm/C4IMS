@@ -15,6 +15,7 @@ import com.c4networks.imsws.dao.UserSecurityDAO;
 import com.c4networks.imsws.utils.AlphaNumericRandomGenerator;
 import com.c4networks.imsws.utils.ProductEnum;
 import com.c4networks.imsws.vo.CompanyDetails;
+import com.c4networks.imsws.vo.IMSCommonVO;
 import com.c4networks.imsws.vo.ProductDetails;
 import com.c4networks.imsws.vo.RoleDetails;
 import com.c4networks.imsws.vo.UserDetails;
@@ -42,44 +43,27 @@ public class UserCreationService {
 	private final int version = 1;
 
 	@Transactional
-	public void createNewUser(UserDetails usrDtls, UserSecurity usrSec, ProductEnum pEnum) {
+	public void createNewUser2(IMSCommonVO imsCommonVO, ProductEnum pEnum) {
 
 		Date date = new Date();
-
-		CompanyDetails companyDtls = new CompanyDetails();
-		if (null != usrDtls.getCompanyDetails()) {
-			companyDtls.setCompanyOID(usrDtls.getCompanyDetails().getCompanyOID());
-			companyDtls.setCompanyID(usrDtls.getCompanyDetails().getCompanyID());
-			companyDtls.setCompanyName(usrDtls.getCompanyDetails().getCompanyName());
-			companyDtls.setCreatedBy(usrDtls.getCreatedBy());
-			companyDtls.setCreatedDate(usrDtls.getCreatedDate());
-			companyDtls.setLastModifiedBy(usrDtls.getLastModifiedBy());
-			companyDtls.setLastModifiedDate(usrDtls.getLastModifiedDate());
-			companyDtls.setPhone(usrDtls.getMobile());
-		} else {
-			companyDtls.setCompanyOID(AlphaNumericRandomGenerator.generateCompanyObjectIdentifier());
-			companyDtls.setCompanyID(AlphaNumericRandomGenerator.generateCompanyIdentifier());
-			companyDtls.setCompanyName(DUMMY_COMPANY_NAME);
-			companyDtls.setCreatedBy(SYSTEM_ADMIN_COMPANY);
-			companyDtls.setCreatedDate(date);
-			companyDtls.setLastModifiedBy(SYSTEM_ADMIN_COMPANY);
-			companyDtls.setLastModifiedDate(date);
-			companyDtls.setPhone(null);
-			ProductDetails productDtls = new ProductDetails();
-			productDtls.setProductID(pEnum.getProductID());
-			productDtls.setProductName(pEnum.getProductName());
-			productDtls.setProductDescription(pEnum.getProductDesc());
-			productDtls.setProductPath(pEnum.getProductPath());
-			companyDtls.setProductDetails(productDtls);
-		}
-		companyDtlsDAO.createCompanyDetails(companyDtls);
 
 		ProductDetails productDtls = new ProductDetails();
 		productDtls.setProductID(pEnum.getProductID());
 		productDtls.setProductName(pEnum.getProductName());
 		productDtls.setProductDescription(pEnum.getProductDesc());
 		productDtls.setProductPath(pEnum.getProductPath());
-//		productDtlsDAO.createProductDetails(productDtls);
+
+		CompanyDetails companyDtls = new CompanyDetails();
+		companyDtls.setCompanyOID(AlphaNumericRandomGenerator.generateCompanyObjectIdentifier());
+		companyDtls.setCompanyID(AlphaNumericRandomGenerator.generateCompanyIdentifier());
+		companyDtls.setCompanyName(DUMMY_COMPANY_NAME);
+		companyDtls.setCreatedBy(SYSTEM_ADMIN_COMPANY);
+		companyDtls.setCreatedDate(date);
+		companyDtls.setLastModifiedBy(SYSTEM_ADMIN_COMPANY);
+		companyDtls.setLastModifiedDate(date);
+		companyDtls.setPhone(imsCommonVO.getMobile());
+		companyDtls.setProductDetails(productDtls);
+		companyDtlsDAO.createCompanyDetails(companyDtls);
 
 		RoleDetails rDtls = new RoleDetails();
 		rDtls.setCompanyDetails(companyDtls);
@@ -97,11 +81,11 @@ public class UserCreationService {
 
 		UserDetails userDtls = new UserDetails();
 		userDtls.setC4UserOID(AlphaNumericRandomGenerator.generateUserIdentifier());
-		userDtls.setUserName(usrDtls.getUserName());
-		userDtls.setEmail(usrDtls.getEmail());
-		userDtls.setFirstName(usrDtls.getFirstName());
-		userDtls.setLastName(usrDtls.getLastName());
-		userDtls.setMobile(usrDtls.getMobile());
+		userDtls.setUserName(imsCommonVO.getEmail());
+		userDtls.setEmail(imsCommonVO.getEmail());
+		userDtls.setFirstName(imsCommonVO.getFirstName());
+		userDtls.setLastName(imsCommonVO.getLastName());
+		userDtls.setMobile(imsCommonVO.getMobile());
 		userDtls.setCreatedBy(SYSTEM_ADMIN_AGENT);
 		userDtls.setCreatedDate(date);
 		userDtls.setLastModifiedBy(SYSTEM_ADMIN_AGENT);
@@ -112,8 +96,8 @@ public class UserCreationService {
 
 		UserSecurity userSec = new UserSecurity();
 		userSec.setUserOID(userDtls.getC4UserOID());
-		userSec.setUserName(usrSec.getUserName());
-		userSec.setPassword(usrSec.getPassword());
+		userSec.setUserName(imsCommonVO.getEmail());
+		userSec.setPassword(imsCommonVO.getPassword());
 		userSec.setTempUsername(null);
 		userSec.setStatus(ACTIVE_USER);
 		userSec.setVersion(version);
