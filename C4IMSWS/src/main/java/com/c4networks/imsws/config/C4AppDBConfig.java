@@ -38,6 +38,8 @@ public class C4AppDBConfig {
 	public JdbcTemplate applicationDataConnection() {
 		System.setProperty("oracle.net.tns_admin",
 				System.getProperty("user.dir") + File.separator + "Wallet_c4clouddb12102023");
+		System.out.println("User directory >>>------------------------------->>" + System.getProperty("user.dir"));
+		System.out.println("oracle.net.tns_admin >>>------------------------------->>" + System.getProperty("oracle.net.tns_admin"));
 		return new JdbcTemplate(dataSource());
 	}
 

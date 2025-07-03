@@ -6,6 +6,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.c4networks.ims.constants.WebRequestMappingConstants;
+import com.c4networks.ims.model.IMSCommonVO;
 import com.c4networks.ims.model.UserSecurity;
 import com.c4networks.ims.services.UserService;
 
@@ -42,9 +44,9 @@ public class LoginController {
 		try {
 			System.out.println("model------------" + model.get("password"));
 			Thread.sleep(500);
-			String result = userService.processUserLogin(userSecurity);
-			if (result == "SUCCESS") {
-				Cookie cookie = new Cookie("C4TOKEN", "C4NetworkToken");
+			IMSCommonVO result = userService.processUserLogin(userSecurity, response);
+			if (StringUtils.isNotEmpty(result.getClientTarget())) {
+				Cookie cookie = new Cookie("C4TOKEN2", "C4NetworkToken");
 				cookie.setMaxAge(-1);
 				cookie.setPath("/");
 				response.addCookie(cookie);
@@ -55,7 +57,7 @@ public class LoginController {
 				response.addCookie(ssocookie);
 
 //				return "redirect:http://localhost:8080/VideoRentalManagementUI/";
-				return "redirect:" + userSecurity.getPath();
+				return "redirect:" + result.getClientTarget();
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();

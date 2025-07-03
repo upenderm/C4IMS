@@ -28,17 +28,17 @@ public class UserServicesRS {
 	@Autowired
 	private ApplicationContextProviderService applicationContext;
 
-	@GET
-	@Path("/authenticateUserSecurity")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response authenticateUserSecurity(@QueryParam(value = "username") final String userName,
-			@QueryParam(value = "password") final String password) {
-		System.out.println("In UserServicesRS.authenticateUserSecurity....**..");
-
-		C4UserObject c4UserObject = userDtlsService.authenticateUserCredentials(userName, password);
-
-		return Response.status(200).entity(c4UserObject).build();
-	}
+//	@GET
+//	@Path("/authenticateUserSecurity2")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public Response authenticateUserSecurity(@QueryParam(value = "username") final String userName,
+//			@QueryParam(value = "password") final String password) {
+//		System.out.println("In UserServicesRS.authenticateUserSecurity....**..");
+//
+//		C4UserObject c4UserObject = userDtlsService.authenticateUserCredentials(userName, password);
+//
+//		return Response.status(200).entity(c4UserObject).build();
+//	}
 
 	@GET
 	@Path("/getAgentsList")

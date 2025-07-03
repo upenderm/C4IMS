@@ -9,6 +9,6 @@ public interface UserService {
 
 	public IMSCommonVO registerNewUser(IMSCommonVO imsCommonVO, HttpServletResponse response);
 
-	public String processUserLogin(UserSecurity userSecurity);
+	public IMSCommonVO processUserLogin(UserSecurity userSecurity, HttpServletResponse response);
 
 }

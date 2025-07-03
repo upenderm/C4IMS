@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.c4networks.ims.client.VRMSServicesClientFacade;
-import com.c4networks.ims.model.C4UserObject;
 import com.c4networks.ims.model.IMSCommonVO;
 import com.c4networks.ims.model.UserSecurity;
 
@@ -23,16 +22,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String processUserLogin(UserSecurity userSecurity) {
-		String result = "";
-		C4UserObject c4UserObject = vrmsServicesClientFacade.processUserLogin(userSecurity.getUserName(), userSecurity.getPassword());
-		if (null != c4UserObject.getUserSecurity() && "ACTIVE".equals(c4UserObject.getUserSecurity().getStatus())) {
-			if (null != c4UserObject.getProductTypes()) {
-				userSecurity.setPath(c4UserObject.getProductTypes().entrySet().iterator().next().getValue());
-			}
-			result = "SUCCESS";
-		}
-		return result;
+	public IMSCommonVO processUserLogin(UserSecurity userSecurity, HttpServletResponse response) {
+		IMSCommonVO imsCommonVO = new IMSCommonVO();
+		imsCommonVO.setEmail(userSecurity.getUserName());
+		imsCommonVO.setPassword(userSecurity.getPassword());
+		return vrmsServicesClientFacade.processUserLogin(imsCommonVO, response);
 	}
 
 }

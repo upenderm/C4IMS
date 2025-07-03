@@ -33,19 +33,23 @@ public class VRMSServicesClientFacade {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	public C4UserObject processUserLogin(String userName, String password) {
-
+	public IMSCommonVO processUserLogin(IMSCommonVO imsCommonVO, HttpServletResponse httpResponse) {
+		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 
-		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		HttpEntity<IMSCommonVO> entity = new HttpEntity<>(imsCommonVO, headers);
 
 		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(VRMS_SERVICES_CONTEXT_URL
 				+ VRMS_SERVICES_AGENT_AUTHENTICATION_CONTEXT + VRMS_SERVICES_AGENT_AUTHENTICATION);
-		uriBuilder.queryParam("username", userName);
-		uriBuilder.queryParam("password", password);
+		
+		ResponseEntity<IMSCommonVO> response = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.POST, entity, IMSCommonVO.class);
+		if(response.getStatusCode().equals(HttpStatus.OK)) {
+			imsCommonVO = response.getBody();
+			readCookiesFromAPIResponse(httpResponse, response);
+		}
 
-		return restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity, C4UserObject.class).getBody();
+		return imsCommonVO;
 	}
 
 	public IMSCommonVO processUserRegisteration(IMSCommonVO imsCommonVO, HttpServletResponse httpResponse) {
@@ -66,21 +70,25 @@ public class VRMSServicesClientFacade {
 		if (response.getStatusCode().equals(HttpStatus.CREATED)) {
 			System.out.println("******Client facade received successfully created message***************");
 			responseVO = response.getBody();
-			String cookieInResponse = response.getHeaders().getFirst(HttpHeaders.SET_COOKIE);
-			String[] split = cookieInResponse.split(";");
-			Cookie cookie = new Cookie(split[0].split(("="))[0], split[0].split(("="))[1]);
-			cookie.setMaxAge(-1);
-			cookie.setPath("/");
-			cookie.setVersion(Integer.valueOf(split[1].split(("="))[1]));
-			cookie.setDomain(split[2].split(("="))[1]);
-			cookie.setPath(split[3].split(("="))[1]);
-			httpResponse.addCookie(cookie);
+			readCookiesFromAPIResponse(httpResponse, response);
 		} else if (response.getStatusCode().equals(HttpStatus.OK)) {
 			responseVO = response.getBody();
 		} else {
 			responseVO = imsCommonVO;
 		}
 		return responseVO;
+	}
+
+	private void readCookiesFromAPIResponse(HttpServletResponse httpResponse, ResponseEntity<IMSCommonVO> response) {
+		String cookieInResponse = response.getHeaders().getFirst(HttpHeaders.SET_COOKIE);
+		String[] split = cookieInResponse.split(";");
+		Cookie cookie = new Cookie(split[0].split(("="))[0], split[0].split(("="))[1]);
+		cookie.setMaxAge(-1);
+		cookie.setPath("/");
+		cookie.setVersion(Integer.valueOf(split[1].split(("="))[1]));
+		cookie.setDomain(split[2].split(("="))[1]);
+		cookie.setPath(split[3].split(("="))[1]);
+		httpResponse.addCookie(cookie);
 	}
 
 	public void testDummy() {

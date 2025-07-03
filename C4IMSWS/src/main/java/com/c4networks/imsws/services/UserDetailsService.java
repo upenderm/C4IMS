@@ -13,6 +13,7 @@ import com.c4networks.imsws.dao.UserDetailsDAO;
 import com.c4networks.imsws.dao.UserSecurityDAO;
 import com.c4networks.imsws.vo.C4UserObject;
 import com.c4networks.imsws.vo.CompanyDetails;
+import com.c4networks.imsws.vo.IMSCommonVO;
 import com.c4networks.imsws.vo.ProductDetails;
 import com.c4networks.imsws.vo.UserDetails;
 import com.c4networks.imsws.vo.UserSecurity;
@@ -37,9 +38,9 @@ public class UserDetailsService {
 		return userDtlsDAO.getAllUsersList();
 	}
 
-	public C4UserObject authenticateUserCredentials(String username, String password) {
+	public C4UserObject authenticateUserCredentials(IMSCommonVO imsCommonVO) {
 		C4UserObject c4UserObject = new C4UserObject();
-		UserSecurity userSecurity = userSecurityDAO.authenticateUserSecurity(username, password);
+		UserSecurity userSecurity = userSecurityDAO.authenticateUserSecurity(imsCommonVO.getEmail(), imsCommonVO.getPassword());
 		if (null != userSecurity) {
 			c4UserObject.setUserSecurity(userSecurity);
 			String[] userArr = { userSecurity.getUserOID() };
@@ -51,9 +52,10 @@ public class UserDetailsService {
 				if (!companyDetails.isEmpty()) {
 					String[] productArr = { companyDetails.get(0).getProductDetails().getProductID() };
 					List<ProductDetails> productDetails = productDetailsDAO.getProductDetails(productArr);
-					Map<String, String> productMap = new HashMap<>();
-					productMap.put(productDetails.get(0).getProductID(), productDetails.get(0).getProductPath());
-					c4UserObject.setProductTypes(productMap);
+					imsCommonVO.setClientTarget(productDetails.get(0).getProductPath());
+//					Map<String, String> productMap = new HashMap<>();
+//					productMap.put(productDetails.get(0).getProductID(), productDetails.get(0).getProductPath());
+//					c4UserObject.setProductTypes(productMap);
 				}
 			}
 		}
